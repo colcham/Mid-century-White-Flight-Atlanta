@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/1940PercentBlack_1.js"></script>
+        <script src="data/1956PercentBlack_2.js"></script>
+        <script src="data/1968PercentBlack_3.js"></script>
+        <script src="data/1972PercentBlack_4.js"></script>
+        <script src="data/1980PercentBlack_5.js"></script>
+        <script src="data/AtlantaMetroCounties_6.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[33.33443952627904,-85.13673088112284],[34.313335463537996,-83.65339722386494]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_BaseMap_0');
+        map.getPane('pane_BaseMap_0').style.zIndex = 400;
+        var layer_BaseMap_0 = L.tileLayer('http://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png', {
+            pane: 'pane_BaseMap_0',
+            opacity: 1.0,
+            attribution: '<a href="http://www.xn--pnvkarte-m4a.de/">© Öpnvkarte, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_BaseMap_0;
+        map.addLayer(layer_BaseMap_0);
+        function pop_1940PercentBlack_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Total Population</th>\
+                        <td>' + (feature.properties['Total_popu'] !== null ? autolinker.link(feature.properties['Total_popu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent White</th>\
+                        <td>' + (feature.properties['Percent_Wh'] !== null ? autolinker.link(feature.properties['Percent_Wh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent Black</th>\
+                        <td>' + (feature.properties['Percent_Bl'] !== null ? autolinker.link(feature.properties['Percent_Bl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_1940PercentBlack_1_0(feature) {
+            if (feature.properties['Percent_Bl'] >= 0.000000 && feature.properties['Percent_Bl'] <= 11.590000 ) {
+                return {
+                pane: 'pane_1940PercentBlack_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(202,0,32,0.9)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 11.590000 && feature.properties['Percent_Bl'] <= 28.850000 ) {
+                return {
+                pane: 'pane_1940PercentBlack_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(244,165,130,0.9)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 28.850000 && feature.properties['Percent_Bl'] <= 50.010000 ) {
+                return {
+                pane: 'pane_1940PercentBlack_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,0.9)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 50.010000 && feature.properties['Percent_Bl'] <= 84.370000 ) {
+                return {
+                pane: 'pane_1940PercentBlack_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(186,186,186,0.9)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 84.370000 && feature.properties['Percent_Bl'] <= 100.000000 ) {
+                return {
+                pane: 'pane_1940PercentBlack_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(64,64,64,0.9)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_1940PercentBlack_1');
+        map.getPane('pane_1940PercentBlack_1').style.zIndex = 401;
+        map.getPane('pane_1940PercentBlack_1').style['mix-blend-mode'] = 'normal';
+        var layer_1940PercentBlack_1 = new L.geoJson(json_1940PercentBlack_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_1940PercentBlack_1',
+            layerName: 'layer_1940PercentBlack_1',
+            pane: 'pane_1940PercentBlack_1',
+            onEachFeature: pop_1940PercentBlack_1,
+            style: style_1940PercentBlack_1_0,
+        });
+        bounds_group.addLayer(layer_1940PercentBlack_1);
+        map.addLayer(layer_1940PercentBlack_1);
+        function pop_1956PercentBlack_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Total Population</th>\
+                        <td>' + (feature.properties['Total_popu'] !== null ? autolinker.link(feature.properties['Total_popu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent White</th>\
+                        <td>' + (feature.properties['Percent_Wh'] !== null ? autolinker.link(feature.properties['Percent_Wh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent Black</th>\
+                        <td>' + (feature.properties['Percent_Bl'] !== null ? autolinker.link(feature.properties['Percent_Bl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_1956PercentBlack_2_0(feature) {
+            if (feature.properties['Percent_Bl'] >= 0.000000 && feature.properties['Percent_Bl'] <= 0.390000 ) {
+                return {
+                pane: 'pane_1956PercentBlack_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9079999999999999)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(202,0,32,0.9079999999999999)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 0.390000 && feature.properties['Percent_Bl'] <= 2.028000 ) {
+                return {
+                pane: 'pane_1956PercentBlack_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9079999999999999)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(244,165,130,0.9079999999999999)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 2.028000 && feature.properties['Percent_Bl'] <= 7.446000 ) {
+                return {
+                pane: 'pane_1956PercentBlack_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9079999999999999)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,0.9079999999999999)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 7.446000 && feature.properties['Percent_Bl'] <= 57.190000 ) {
+                return {
+                pane: 'pane_1956PercentBlack_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9079999999999999)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(186,186,186,0.9079999999999999)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 57.190000 && feature.properties['Percent_Bl'] <= 100.000000 ) {
+                return {
+                pane: 'pane_1956PercentBlack_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9079999999999999)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(64,64,64,0.9079999999999999)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_1956PercentBlack_2');
+        map.getPane('pane_1956PercentBlack_2').style.zIndex = 402;
+        map.getPane('pane_1956PercentBlack_2').style['mix-blend-mode'] = 'normal';
+        var layer_1956PercentBlack_2 = new L.geoJson(json_1956PercentBlack_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_1956PercentBlack_2',
+            layerName: 'layer_1956PercentBlack_2',
+            pane: 'pane_1956PercentBlack_2',
+            onEachFeature: pop_1956PercentBlack_2,
+            style: style_1956PercentBlack_2_0,
+        });
+        bounds_group.addLayer(layer_1956PercentBlack_2);
+        map.addLayer(layer_1956PercentBlack_2);
+        function pop_1968PercentBlack_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Total Population</th>\
+                        <td>' + (feature.properties['Total_popu'] !== null ? autolinker.link(feature.properties['Total_popu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent White</th>\
+                        <td>' + (feature.properties['Precent_Wh'] !== null ? autolinker.link(feature.properties['Precent_Wh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent Black</th>\
+                        <td>' + (feature.properties['Percent_Bl'] !== null ? autolinker.link(feature.properties['Percent_Bl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_1968PercentBlack_3_0(feature) {
+            if (feature.properties['Percent_Bl'] >= 0.000000 && feature.properties['Percent_Bl'] <= 0.074000 ) {
+                return {
+                pane: 'pane_1968PercentBlack_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(202,0,32,0.9)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 0.074000 && feature.properties['Percent_Bl'] <= 0.235000 ) {
+                return {
+                pane: 'pane_1968PercentBlack_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(244,165,130,0.9)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 0.235000 && feature.properties['Percent_Bl'] <= 0.458000 ) {
+                return {
+                pane: 'pane_1968PercentBlack_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,0.9)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 0.458000 && feature.properties['Percent_Bl'] <= 0.831000 ) {
+                return {
+                pane: 'pane_1968PercentBlack_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(186,186,186,0.9)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 0.831000 && feature.properties['Percent_Bl'] <= 1.000000 ) {
+                return {
+                pane: 'pane_1968PercentBlack_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(64,64,64,0.9)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_1968PercentBlack_3');
+        map.getPane('pane_1968PercentBlack_3').style.zIndex = 403;
+        map.getPane('pane_1968PercentBlack_3').style['mix-blend-mode'] = 'normal';
+        var layer_1968PercentBlack_3 = new L.geoJson(json_1968PercentBlack_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_1968PercentBlack_3',
+            layerName: 'layer_1968PercentBlack_3',
+            pane: 'pane_1968PercentBlack_3',
+            onEachFeature: pop_1968PercentBlack_3,
+            style: style_1968PercentBlack_3_0,
+        });
+        bounds_group.addLayer(layer_1968PercentBlack_3);
+        map.addLayer(layer_1968PercentBlack_3);
+        function pop_1972PercentBlack_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Census Tract</th>\
+                        <td>' + (feature.properties['Census_Tra'] !== null ? autolinker.link(feature.properties['Census_Tra'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Total Population</th>\
+                        <td>' + (feature.properties['Total_popu'] !== null ? autolinker.link(feature.properties['Total_popu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent White</th>\
+                        <td>' + (feature.properties['Percent_Wh'] !== null ? autolinker.link(feature.properties['Percent_Wh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent Black</th>\
+                        <td>' + (feature.properties['Percent_Bl'] !== null ? autolinker.link(feature.properties['Percent_Bl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_1972PercentBlack_4_0(feature) {
+            if (feature.properties['Percent_Bl'] >= 0.080000 && feature.properties['Percent_Bl'] <= 7.840000 ) {
+                return {
+                pane: 'pane_1972PercentBlack_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(202,0,32,0.9)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 7.840000 && feature.properties['Percent_Bl'] <= 27.000000 ) {
+                return {
+                pane: 'pane_1972PercentBlack_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(244,165,130,0.9)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 27.000000 && feature.properties['Percent_Bl'] <= 54.000000 ) {
+                return {
+                pane: 'pane_1972PercentBlack_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,0.9)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 54.000000 && feature.properties['Percent_Bl'] <= 82.000000 ) {
+                return {
+                pane: 'pane_1972PercentBlack_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(186,186,186,0.9)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 82.000000 && feature.properties['Percent_Bl'] <= 100.000000 ) {
+                return {
+                pane: 'pane_1972PercentBlack_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(64,64,64,0.9)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_1972PercentBlack_4');
+        map.getPane('pane_1972PercentBlack_4').style.zIndex = 404;
+        map.getPane('pane_1972PercentBlack_4').style['mix-blend-mode'] = 'normal';
+        var layer_1972PercentBlack_4 = new L.geoJson(json_1972PercentBlack_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_1972PercentBlack_4',
+            layerName: 'layer_1972PercentBlack_4',
+            pane: 'pane_1972PercentBlack_4',
+            onEachFeature: pop_1972PercentBlack_4,
+            style: style_1972PercentBlack_4_0,
+        });
+        bounds_group.addLayer(layer_1972PercentBlack_4);
+        map.addLayer(layer_1972PercentBlack_4);
+        function pop_1980PercentBlack_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Census_tra'] !== null ? autolinker.link(feature.properties['Census_tra'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Total Population</th>\
+                        <td>' + (feature.properties['Total_popu'] !== null ? autolinker.link(feature.properties['Total_popu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent White</th>\
+                        <td>' + (feature.properties['Percent_Wh'] !== null ? autolinker.link(feature.properties['Percent_Wh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent Black</th>\
+                        <td>' + (feature.properties['Percent_Bl'] !== null ? autolinker.link(feature.properties['Percent_Bl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_1980PercentBlack_5_0(feature) {
+            if (feature.properties['Percent_Bl'] >= 0.020000 && feature.properties['Percent_Bl'] <= 7.980000 ) {
+                return {
+                pane: 'pane_1980PercentBlack_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(202,0,32,0.9)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 7.980000 && feature.properties['Percent_Bl'] <= 25.520000 ) {
+                return {
+                pane: 'pane_1980PercentBlack_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(244,165,130,0.9)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 25.520000 && feature.properties['Percent_Bl'] <= 51.540000 ) {
+                return {
+                pane: 'pane_1980PercentBlack_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,0.9)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 51.540000 && feature.properties['Percent_Bl'] <= 80.610000 ) {
+                return {
+                pane: 'pane_1980PercentBlack_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(186,186,186,0.9)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Percent_Bl'] >= 80.610000 && feature.properties['Percent_Bl'] <= 99.820000 ) {
+                return {
+                pane: 'pane_1980PercentBlack_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.9)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(64,64,64,0.9)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_1980PercentBlack_5');
+        map.getPane('pane_1980PercentBlack_5').style.zIndex = 405;
+        map.getPane('pane_1980PercentBlack_5').style['mix-blend-mode'] = 'normal';
+        var layer_1980PercentBlack_5 = new L.geoJson(json_1980PercentBlack_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_1980PercentBlack_5',
+            layerName: 'layer_1980PercentBlack_5',
+            pane: 'pane_1980PercentBlack_5',
+            onEachFeature: pop_1980PercentBlack_5,
+            style: style_1980PercentBlack_5_0,
+        });
+        bounds_group.addLayer(layer_1980PercentBlack_5);
+        map.addLayer(layer_1980PercentBlack_5);
+        function pop_AtlantaMetroCounties_6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_AtlantaMetroCounties_6_0() {
+            return {
+                pane: 'pane_AtlantaMetroCounties_6',
+                opacity: 1,
+                color: 'rgba(53,121,177,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_AtlantaMetroCounties_6');
+        map.getPane('pane_AtlantaMetroCounties_6').style.zIndex = 406;
+        map.getPane('pane_AtlantaMetroCounties_6').style['mix-blend-mode'] = 'normal';
+        var layer_AtlantaMetroCounties_6 = new L.geoJson(json_AtlantaMetroCounties_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_AtlantaMetroCounties_6',
+            layerName: 'layer_AtlantaMetroCounties_6',
+            pane: 'pane_AtlantaMetroCounties_6',
+            onEachFeature: pop_AtlantaMetroCounties_6,
+            style: style_AtlantaMetroCounties_6_0,
+        });
+        bounds_group.addLayer(layer_AtlantaMetroCounties_6);
+        map.addLayer(layer_AtlantaMetroCounties_6);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/AtlantaMetroCounties_6.png" /> Atlanta Metro Counties': layer_AtlantaMetroCounties_6,'1980 Percent Black<br /><table><tr><td style="text-align: center;"><img src="legend/1980PercentBlack_5_080.png" /></td><td>0 - 8</td></tr><tr><td style="text-align: center;"><img src="legend/1980PercentBlack_5_82551.png" /></td><td>8 - 25.5</td></tr><tr><td style="text-align: center;"><img src="legend/1980PercentBlack_5_2555152.png" /></td><td>25.5 - 51.5</td></tr><tr><td style="text-align: center;"><img src="legend/1980PercentBlack_5_5158063.png" /></td><td>51.5 - 80.6</td></tr><tr><td style="text-align: center;"><img src="legend/1980PercentBlack_5_8069984.png" /></td><td>80.6 - 99.8</td></tr></table>': layer_1980PercentBlack_5,'1972 Percent Black<br /><table><tr><td style="text-align: center;"><img src="legend/1972PercentBlack_4_01780.png" /></td><td>0.1 - 7.8</td></tr><tr><td style="text-align: center;"><img src="legend/1972PercentBlack_4_78271.png" /></td><td>7.8 - 27</td></tr><tr><td style="text-align: center;"><img src="legend/1972PercentBlack_4_27542.png" /></td><td>27 - 54</td></tr><tr><td style="text-align: center;"><img src="legend/1972PercentBlack_4_54823.png" /></td><td>54 - 82</td></tr><tr><td style="text-align: center;"><img src="legend/1972PercentBlack_4_821004.png" /></td><td>82 - 100</td></tr></table>': layer_1972PercentBlack_4,'1968 Percent Black<br /><table><tr><td style="text-align: center;"><img src="legend/1968PercentBlack_3_000740.png" /></td><td>0 - 0.074</td></tr><tr><td style="text-align: center;"><img src="legend/1968PercentBlack_3_007402351.png" /></td><td>0.074 - 0.235</td></tr><tr><td style="text-align: center;"><img src="legend/1968PercentBlack_3_023504582.png" /></td><td>0.235 - 0.458</td></tr><tr><td style="text-align: center;"><img src="legend/1968PercentBlack_3_045808313.png" /></td><td>0.458 - 0.831</td></tr><tr><td style="text-align: center;"><img src="legend/1968PercentBlack_3_083114.png" /></td><td>0.831 - 1</td></tr></table>': layer_1968PercentBlack_3,'1956 Percent Black<br /><table><tr><td style="text-align: center;"><img src="legend/1956PercentBlack_2_00390.png" /></td><td>0 - 0.39</td></tr><tr><td style="text-align: center;"><img src="legend/1956PercentBlack_2_0392031.png" /></td><td>0.39 - 2.03</td></tr><tr><td style="text-align: center;"><img src="legend/1956PercentBlack_2_2037452.png" /></td><td>2.03 - 7.45</td></tr><tr><td style="text-align: center;"><img src="legend/1956PercentBlack_2_74557193.png" /></td><td>7.45 - 57.19</td></tr><tr><td style="text-align: center;"><img src="legend/1956PercentBlack_2_57191004.png" /></td><td>57.19 - 100</td></tr></table>': layer_1956PercentBlack_2,'1940 Percent Black<br /><table><tr><td style="text-align: center;"><img src="legend/1940PercentBlack_1_0120.png" /></td><td>0 - 12</td></tr><tr><td style="text-align: center;"><img src="legend/1940PercentBlack_1_12291.png" /></td><td>12 - 29</td></tr><tr><td style="text-align: center;"><img src="legend/1940PercentBlack_1_29502.png" /></td><td>29 - 50</td></tr><tr><td style="text-align: center;"><img src="legend/1940PercentBlack_1_50843.png" /></td><td>50 - 84</td></tr><tr><td style="text-align: center;"><img src="legend/1940PercentBlack_1_841004.png" /></td><td>84 - 100</td></tr></table>': layer_1940PercentBlack_1,"Base Map": layer_BaseMap_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
